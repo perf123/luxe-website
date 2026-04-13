@@ -1,0 +1,409 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Luxe Cakes &amp; Macarons | Artisan Wedding Cakes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #fdf8f0; --blush: #e8c9b0; --gold: #c9a96e; --gold-light: #e8d5b0;
+      --deep: #2c1a0e; --mocha: #6b3f28; --white: #fff; --text: #3d2112;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Josefin Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 60px; background: rgba(44,26,14,0.92); backdrop-filter: blur(10px);
+      transition: padding 0.4s;
+    }
+    nav.scrolled { padding: 16px 60px; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: var(--gold); letter-spacing: 2px; }
+    .nav-logo span { color: var(--gold); font-style: italic; font-weight: 600; }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--gold); }
+
+    .hero { height: 110vh; max-height: 110vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; margin-bottom: -1px; }
+    .hero-left { background: var(--deep); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 100px 60px 40px 80px; position: relative; z-index: 2; }
+    .hero-left::after { content: ''; position: absolute; right: -60px; top: 0; bottom: 0; width: 120px; background: var(--deep); clip-path: polygon(0 0, 0 100%, 100% 100%); z-index: 3; }
+    .badge { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold); padding: 6px 16px; margin-bottom: 24px; display: inline-block; animation: fadeUp 0.8s ease both; }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5.5vw, 80px); font-weight: 300; line-height: 1.05; color: var(--white); margin-bottom: 10px; animation: fadeUp 0.9s 0.1s ease both; }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-subtitle { font-size: 12px; letter-spacing: 5px; text-transform: uppercase; color: var(--blush); margin-bottom: 20px; animation: fadeUp 1s 0.2s ease both; }
+    .hero-desc { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.65); max-width: 360px; margin-bottom: 30px; letter-spacing: 0.5px; animation: fadeUp 1s 0.3s ease both; }
+    .hero-cta { display: inline-block; padding: 16px 44px; background: var(--gold); color: var(--deep); text-decoration: none; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; transition: all 0.3s; animation: fadeUp 1s 0.4s ease both; }
+    .hero-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .hero-right { position: relative; overflow: hidden; }
+    .hero-right img { width: 100%; height: 100%; object-fit: cover; animation: zoomIn 1.4s ease both; }
+    .hero-right::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44,26,14,0.35) 0%, transparent 60%); z-index: 1; }
+    .scroll-hint { position: absolute; bottom: 30px; left: 80px; display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.4); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; z-index: 10; animation: fadeUp 1s 0.8s ease both; }
+    .scroll-hint::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
+
+    .intro-strip { background: var(--gold); padding: 22px 60px; display: flex; justify-content: center; align-items: center; gap: 60px; overflow: hidden; scroll-margin-top: 70px; }
+    .intro-strip p { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--deep); white-space: nowrap; }
+    .intro-strip .dot { width: 5px; height: 5px; background: var(--deep); border-radius: 50%; opacity: 0.5; flex-shrink: 0; }
+
+    section { padding: 120px 80px; }
+    .section-label { font-size: 10px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 16px; }
+    .section-label::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 60px); font-weight: 300; line-height: 1.1; color: var(--deep); margin-bottom: 24px; }
+    .section-title em { font-style: italic; color: var(--mocha); }
+
+    .about { background: var(--white); display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 0 !important; scroll-margin-top: 0; }
+    .about-image { position: relative; overflow: hidden; min-height: 500px; }
+    .about-image img { width: 100%; height: 100%; object-fit: cover; }
+    .about-image-overlay { position: absolute; bottom: 40px; right: -1px; background: var(--gold); padding: 20px 28px; max-width: 240px; }
+    .about-image-overlay p { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-style: italic; color: var(--deep); line-height: 1.3; }
+    .about-content { padding: 40px 60px; display: flex; flex-direction: column; justify-content: center; }
+    .about-content p { font-size: 15px; line-height: 1.75; color: #6b4c37; margin-bottom: 14px; letter-spacing: 0.3px; }
+    .credential-list { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .credential-item { display: flex; align-items: flex-start; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--gold-light); }
+    .credential-item:last-child { border-bottom: none; }
+    .credential-icon { width: 36px; height: 36px; background: var(--gold-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
+    .credential-item h4 { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--mocha); margin-bottom: 4px; }
+    .credential-item p { font-size: 15px; color: #8b6040; margin: 0; line-height: 1.6; }
+
+    .offerings { background: var(--cream); text-align: center; padding: 50px 80px 80px; }
+    .offerings .section-label { justify-content: center; }
+    .offerings .section-label::before { display: none; }
+    .offerings-grid { display: flex; flex-direction: column; gap: 2px; margin-top: 30px; }
+    .offerings-row { display: grid; gap: 2px; }
+    .offerings-row-1 { grid-template-columns: repeat(2, 1fr); }
+    .offerings-row-1 .offering-card { aspect-ratio: unset; height: calc(100vh - 280px); }
+    .offerings-row-2 { grid-template-columns: repeat(3, 1fr); }
+    .offering-card { position: relative; overflow: hidden; aspect-ratio: 4/5; cursor: pointer; }
+    .offering-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+    .offering-card:hover img { transform: scale(1.06); }
+    .offering-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(44,26,14,0.85) 0%, rgba(44,26,14,0.1) 50%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 36px 30px; transition: all 0.4s; }
+    .offering-card:hover .offering-card-overlay { background: linear-gradient(to top, rgba(44,26,14,0.92) 0%, rgba(44,26,14,0.3) 60%, rgba(44,26,14,0.1) 100%); }
+    .offering-tag { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+    .offering-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: var(--white); line-height: 1.2; margin-bottom: 8px; }
+    .offering-desc { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height 0.4s, opacity 0.4s; opacity: 0; letter-spacing: 0.3px; }
+    .offering-card:hover .offering-desc { max-height: 100px; opacity: 1; }
+    .offering-card.wide { display: none; }
+
+    .gallery { background: var(--deep); padding: 100px 80px; }
+    .gallery .section-title { color: var(--white); }
+    .gallery .section-title em { color: var(--gold); }
+    .gallery-grid { margin-top: 60px; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 240px 240px; gap: 3px; }
+    .gallery-item { overflow: hidden; position: relative; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease, filter 0.6s ease; filter: saturate(0.8); }
+    .gallery-item:hover img { transform: scale(1.08); filter: saturate(1.1); }
+    .gallery-item:nth-child(1) { grid-row: span 2; }
+    .gallery-item:nth-child(5) { grid-column: span 2; }
+
+    .process { background: var(--cream); padding: 120px 80px; }
+    .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-top: 70px; }
+    .process-step { position: relative; padding-top: 30px; }
+    .process-step::before { content: ''; position: absolute; top: 12px; left: 50px; right: 0; height: 1px; background: var(--gold-light); }
+    .process-step:last-child::before { display: none; }
+    .step-number { width: 44px; height: 44px; background: var(--gold); color: var(--deep); font-family: 'Cormorant Garamond', serif; font-size: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; position: relative; z-index: 1; }
+    .process-step h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--deep); margin-bottom: 12px; }
+    .process-step p { font-size: 13px; color: #8b6040; line-height: 1.8; letter-spacing: 0.3px; }
+
+    .contact { background: var(--deep); padding: 120px 80px; position: relative; overflow: hidden; }
+    .contact::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; border-radius: 50%; border: 1px solid rgba(201,169,110,0.15); }
+    .contact::after { content: ''; position: absolute; top: -50px; right: -50px; width: 350px; height: 350px; border-radius: 50%; border: 1px solid rgba(201,169,110,0.1); }
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+    .contact .section-title { color: var(--white); }
+    .contact .section-title em { color: var(--gold); }
+    .contact-left p { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 2; margin-top: 20px; letter-spacing: 0.3px; }
+    .contact-cards { display: flex; flex-direction: column; gap: 20px; }
+    .contact-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(201,169,110,0.25); padding: 30px 36px; display: flex; align-items: center; gap: 24px; transition: all 0.3s; }
+    .contact-card:hover { background: rgba(201,169,110,0.1); border-color: var(--gold); }
+    .contact-card-icon { font-size: 28px; flex-shrink: 0; }
+    .contact-card h4 { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+    .contact-card p { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: var(--white); }
+    .contact-card a { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: var(--white); text-decoration: none; transition: color 0.3s; }
+    .contact-card a:hover { color: var(--gold); }
+    .contact-note { margin-top: 28px; padding: 20px 24px; border-left: 2px solid var(--gold); }
+    .contact-note p { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.8; letter-spacing: 0.5px; }
+
+    footer { background: #1a0d06; padding: 40px 80px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(201,169,110,0.15); }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; color: var(--white); letter-spacing: 2px; }
+    .footer-logo span { color: var(--gold); font-style: italic; }
+    footer p { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 1px; }
+    footer nav { position: static; background: transparent; padding: 0; }
+    footer .nav-links { gap: 28px; }
+
+    .ornament { text-align: center; margin: 30px 0; color: var(--gold); font-size: 20px; letter-spacing: 12px; opacity: 0.6; }
+    .nav-toggle { display: none; background: none; border: none; color: var(--gold); font-size: 22px; cursor: pointer; padding: 4px; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { from { transform: scale(1.1); } to { transform: scale(1); } }
+
+    @media (max-width: 900px) {
+      /* Nav */
+      nav { padding: 16px 24px; }
+      nav.scrolled { padding: 12px 24px; }
+      .nav-links { gap: 20px; }
+      .nav-links a { font-size: 10px; letter-spacing: 2px; }
+
+      /* Hero */
+      .hero { height: auto; max-height: none; grid-template-columns: 1fr; }
+      .hero-left { padding: 100px 24px 50px; }
+      .hero-left::after { display: none; }
+      .hero-right { height: 45vh; }
+      .hero-desc { max-width: 100%; }
+      .scroll-hint { left: 24px; }
+
+      /* Intro strip */
+      .intro-strip { padding: 16px 24px; gap: 20px; flex-wrap: wrap; justify-content: center; }
+
+      /* About */
+      .about { grid-template-columns: 1fr; }
+      .about-image { min-height: 300px; }
+      .about-content { padding: 40px 24px; }
+      .about-image-overlay { max-width: 200px; padding: 16px 20px; }
+      .about-image-overlay p { font-size: 20px; }
+
+      /* Offerings */
+      .offerings { padding: 40px 24px 60px; }
+      .offerings-row-1, .offerings-row-2 { grid-template-columns: 1fr; }
+      .offerings-row-1 .offering-card { height: 260px; }
+      .offering-card { aspect-ratio: 4/3; }
+
+      /* Gallery */
+      .gallery { padding: 60px 24px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+      .gallery-item:nth-child(1) { grid-row: span 1; }
+      .gallery-item:nth-child(5) { grid-column: span 1; }
+
+      /* Process */
+      .process { padding: 60px 24px; }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .process-step::before { display: none; }
+
+      /* Contact */
+      .contact { padding: 60px 24px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      .contact-card { padding: 20px 24px; }
+
+      /* General */
+      section { padding: 60px 24px; }
+      .section-title { font-size: clamp(28px, 7vw, 48px); }
+
+      /* Footer */
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 30px 24px; }
+      footer nav { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      /* Nav — hide links on very small screens */
+      .nav-links { display: none; }
+      .nav-logo { font-size: 16px; }
+
+      /* Hero */
+      .hero-left { padding: 90px 20px 40px; }
+      .hero-title { font-size: clamp(36px, 10vw, 60px); }
+      .hero-right { height: 35vh; }
+      .hero-cta { padding: 14px 32px; }
+
+      /* Intro strip */
+      .intro-strip { gap: 12px; padding: 14px 16px; }
+      .intro-strip p { font-size: 9px; letter-spacing: 2px; }
+
+      /* About */
+      .about-content { padding: 30px 20px; }
+      .credential-item { flex-direction: column; gap: 8px; }
+
+      /* Offerings */
+      .offerings { padding: 30px 16px 50px; }
+      .offerings-row-1 .offering-card { height: 220px; }
+      .offering-card { aspect-ratio: 3/2; }
+
+      /* Process */
+      .process-steps { grid-template-columns: 1fr; }
+
+      /* Contact */
+      .contact-card { flex-direction: column; gap: 12px; padding: 16px 20px; }
+      .contact-card p, .contact-card a { font-size: 18px; }
+
+      /* Gallery */
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <div class="nav-logo">Luxe <span>Cakes</span> &amp; Macarons</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#offerings">Offerings</a></li>
+    <li><a href="#contact">Order</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <span class="badge">&#9733; London's Artisan Patissier</span>
+    <h1 class="hero-title">Crafted<br>with <em>Love</em><br>&amp; Artistry</h1>
+    <p class="hero-subtitle">Wedding Cakes &middot; French Macarons</p>
+    <p class="hero-desc">Exquisite bespoke wedding cakes and handcrafted French macarons, created by a master pastry chef with over a decade at the world's finest five-star hotels.</p>
+    <a href="#contact" class="hero-cta">Enquire for Your Order</a>
+  </div>
+  <div class="hero-right">
+    <img src="images/hero-wedding-cake.jpg" alt="Elegant tiered wedding cake"/>
+  </div>
+  <div class="scroll-hint">Discover our creations</div>
+</section>
+
+<div class="intro-strip" id="about">
+  <p>Bespoke Wedding Cakes</p><div class="dot"></div>
+  <p>French Macarons</p><div class="dot"></div>
+  <p>Five-Star Heritage</p><div class="dot"></div>
+  <p>Made to Order</p>
+</div>
+
+<section class="about">
+  <div class="about-image">
+    <img src="images/about-chef.jpg" alt="Chef at work"/>
+    <div class="about-image-overlay">
+      <p>"Every cake tells a love story."</p>
+    </div>
+  </div>
+  <div class="about-content">
+    <div class="section-label">Our Story</div>
+    <h2 class="section-title">Meet <em>Chef Syed</em></h2>
+    <p>Introducing Chef Syed — our master Artisan Head Pastry Chef whose culinary artistry redefines luxury desserts. With an exceptional track record in Michelin-starred establishments worldwide, including prestigious venues such as Hilton Hotels, St Martins Lane, Bingham, Do &amp; Co, Lensbury, and Barnsdale, Chef Syed brings unparalleled expertise to every creation.</p>
+    <p>Specializing in crafting exquisite wedding cakes, gourmet French macarons, and stunning plated desserts, he elevates each piece to a work of art. His innovative approach also caters to dietary needs, offering egg-free, vegan, and allergen-friendly options without compromising on flavour or sophistication.</p>
+    <p>Whether it's an intimate celebration or a grand event, Chef Syed's visionary desserts promise to delight, impress, and leave a lasting impression. Experience the pinnacle of pastry mastery with a Chef whose passion and precision turn dessert into an unforgettable experience.</p>
+    <div class="credential-list">
+      <div class="credential-item">
+        <div class="credential-icon">&#x1F468;&#x200D;&#x1F373;</div>
+        <div><h4>Michelin-Starred Heritage</h4><p>Hilton Hotels, St Martins Lane, Bingham, Do &amp; Co, Lensbury &amp; Barnsdale</p></div>
+      </div>
+      <div class="credential-item">
+        <div class="credential-icon">&#x1F370;</div>
+        <div><h4>Specialist Expertise</h4><p>Wedding cakes, French macarons &amp; plated desserts</p></div>
+      </div>
+      <div class="credential-item">
+        <div class="credential-icon">&#x1F33F;</div>
+        <div><h4>Dietary Inclusive</h4><p>Egg-free, vegan &amp; allergen-friendly options available</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="offerings" id="offerings">
+  <div class="section-label">What We Create</div>
+  <h2 class="section-title">Our <em>Signature</em> Offerings</h2>
+  <div class="ornament">&#10022; &#10022; &#10022;</div>
+  <div class="offerings-grid">
+    <div class="offerings-row offerings-row-1">
+      <div class="offering-card">
+        <img src="images/offering-bespoke-cake-new.jpg" alt="Bespoke wedding cake"/>
+        <div class="offering-card-overlay">
+          <span class="offering-tag">Signature</span>
+          <h3 class="offering-name">Bespoke Wedding Cakes</h3>
+          <p class="offering-desc">Every wedding cake is a one-of-a-kind masterpiece, tailored to reflect your love story. Classic tiers, floral embellishments, and an array of exquisite flavours.</p>
+        </div>
+      </div>
+      <div class="offering-card">
+        <img src="images/macaron-tower.jpg" alt="French macarons"/>
+        <div class="offering-card-overlay">
+          <span class="offering-tag">Statement Piece</span>
+          <h3 class="offering-name">Macaron Towers</h3>
+          <p class="offering-desc">A stunning alternative to the traditional cake &mdash; towers of hand-piped macarons, customised to your wedding palette.</p>
+        </div>
+      </div>
+    </div>
+    <div class="offerings-row offerings-row-2">
+      <div class="offering-card">
+        <img src="images/offering-celebration.jpg" alt="Celebration cakes"/>
+        <div class="offering-card-overlay">
+          <span class="offering-tag">Celebration</span>
+          <h3 class="offering-name">Celebration Cakes</h3>
+          <p class="offering-desc">Anniversaries, engagements, birthdays, and corporate events � our celebration cakes combine artisan craft with personal meaning.</p>
+        </div>
+      </div>
+      <div class="offering-card">
+        <img src="images/offering-gift-boxes.jpg" alt="Luxury gift boxes"/>
+        <div class="offering-card-overlay">
+          <span class="offering-tag">Gifting</span>
+          <h3 class="offering-name">Luxury Gift Boxes</h3>
+          <p class="offering-desc">Curated macaron gift boxes, beautifully packaged for weddings, events, and corporate gifting. A truly memorable favour.</p>
+        </div>
+      </div>
+      <div class="offering-card">
+        <img src="images/offering-macarons.jpg" alt="Plated Desserts"/>
+        <div class="offering-card-overlay">
+          <span class="offering-tag">Statement Piece</span>
+          <h3 class="offering-name">Macaron Towers</h3>
+          <p class="offering-desc">A stunning alternative to the traditional cake &mdash; towers of hand-piped macarons, customised to your wedding palette.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="section-label">Gallery</div>
+  <h2 class="section-title">A <em>Taste</em> of Our Work</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item"><img src="images/gallery-1.jpg" alt="Wedding cake detail"/></div>
+    <div class="gallery-item"><img src="images/gallery-2.jpg" alt="Macarons close up"/></div>
+    <div class="gallery-item"><img src="images/gallery-3.jpg" alt="Cake layers"/></div>
+    <div class="gallery-item"><img src="images/gallery-4.jpg" alt="Rose cake"/></div>
+    <div class="gallery-item"><img src="images/gallery-5.jpg" alt="Celebration cakes"/></div>
+    <div class="gallery-item"><img src="images/gallery-6.jpg" alt="Macaron tower wedding"/></div>
+  </div>
+</section>
+
+<section class="process">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">From <em>Vision</em> to Table</h2>
+  <div class="process-steps">
+    <div class="process-step"><div class="step-number">1</div><h3>Reach Out</h3><p>Call or message us to start the conversation about your dream cake or macaron order.</p></div>
+    <div class="process-step"><div class="step-number">2</div><h3>Consultation</h3><p>We discuss your vision, flavours, design, dietary needs, and event date in detail.</p></div>
+    <div class="process-step"><div class="step-number">3</div><h3>Creation</h3><p>Your order is handcrafted with premium ingredients and years of five-star expertise.</p></div>
+    <div class="process-step"><div class="step-number">4</div><h3>Delivery</h3><p>Your creation is carefully packaged and delivered fresh, ready to make memories.</p></div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="section-label">Get in Touch</div>
+      <h2 class="section-title">Ready to <em>Order?</em></h2>
+      <p>We take orders for weddings, celebrations, and special events. All creations are made to order, ensuring the freshest and most personal experience. Get in touch early to secure your date — our calendar fills quickly.</p>
+      <div class="contact-note"><p>We recommend that inquiries be made at least 3 to 4 weeks prior to ordering a wedding cake, 1 to 2 weeks for standard cakes, and 3 to 4 working days for macaron orders. Delivery services are available, with charges based on the delivery distance.</p></div>
+    </div>
+    <div class="contact-cards">
+      <div class="contact-card"><div class="contact-card-icon">&#x1F4DE;</div><div><h4>Call Us</h4><a href="tel:+447909089070">+44 7909 089 070</a></div></div>
+      <div class="contact-card"><div class="contact-card-icon">&#x1F4AC;</div><div><h4>WhatsApp</h4><a href="https://wa.me/447909089070" target="_blank">Message on WhatsApp</a></div></div>
+      <div class="contact-card"><div class="contact-card-icon">&#x1F4E7;</div><div><h4>Email</h4><a href="mailto:rahman_qa@yahoo.co.uk">rahman_qa@yahoo.co.uk</a></div></div>
+      <div class="contact-card"><div class="contact-card-icon">&#x1F4CD;</div><div><h4>Based In</h4><p>London &amp; Leicester, United Kingdom</p></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Luxe <span>Cakes</span> &amp; Macarons</div>
+  <p>&copy; 2025 Luxe Cakes &amp; Macarons &middot; All Rights Reserved</p>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#offerings">Offerings</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</footer>
+
+<script>
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 60); });
+
+  const toggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+</script>
+</body>
+</html>
