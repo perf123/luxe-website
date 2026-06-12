@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://perf123.github.io/luxe-website/sitemap.xml
